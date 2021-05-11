@@ -50,7 +50,7 @@ userSchema.methods.removeFromCart = function(productId){
 };
 
 userSchema.methods.clearCart = function() {
-  this.cart = {itmes:[]};
+  this.cart = {items:[]};
   return this.save();
 
 };

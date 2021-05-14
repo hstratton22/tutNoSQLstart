@@ -35,15 +35,18 @@ app.use(session({
   store: store
  })
 );
-/*
+
 app.use((req, res, next) => {
-  User.findById('609583ea3f161a723a332044')//("60947956b893eb8bf3e04661")
+  if (!req.session.user){
+    return next();
+  }
+  User.findById(req.session.user._id)//('609583ea3f161a723a332044')//("60947956b893eb8bf3e04661")
     .then(user => {
       req.user = user;
       next();
     })
     .catch(err => console.log(err));
-});*/
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

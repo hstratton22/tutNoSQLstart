@@ -4,11 +4,14 @@ const Product = require('../models/product');
 //const ObjectId = mongodb.ObjectId;
 
 exports.getAddProduct = (req, res, next) => {
+  /*if (!req.session.isLoggedIn) {
+    return res.redirect('/login');
+  }*/
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated : req.session.isLoggedIn//user
+    //isAuthenticated : req.session.isLoggedIn//user
   });
 };
 
@@ -60,7 +63,7 @@ exports.getEditProduct = (req, res, next) => {
         path: '/admin/edit-product',
         editing: editMode,
         product: product,
-        isAuthenticated : req.session.isLoggedIn
+        //isAuthenticated : req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -79,8 +82,7 @@ exports.postEditProduct = (req, res, next) => {
     product.description = updatedDesc;
     product.imageUrl = updatedImageUrl;
     
-    return product
-      .save()
+    return product.save()
   })
     .then(result => {
       console.log('UPDATED PRODUCT!');
@@ -99,7 +101,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
-        isAuthenticated :  req.session.isLoggedIn
+        //isAuthenticated :  req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));

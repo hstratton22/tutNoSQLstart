@@ -7,3 +7,5 @@ npm-debug.log
 *.dev
 Dockerfile
 docker-compose.yml
+
+private

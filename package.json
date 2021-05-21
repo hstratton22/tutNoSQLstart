@@ -20,9 +20,10 @@
     "connect-mongodb-session": "^2.4.1",
     "csurf": "^1.11.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.17.1",
+    "express-validator": "^6.11.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.7",
     "mysql2": "^1.6.1",
@@ -30,6 +31,7 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "pug": "^3.0.2",
     "sequelize": "^5.0.0-beta.11",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "validator": "^10.11.0"
   }
 }

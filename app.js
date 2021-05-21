@@ -7,12 +7,13 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const PRIVATE = require('./private');
 
 const errorController = require('./controllers/error');
 //const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://heatherS:rzdW8iGaPSvM35rv@cluster0.3uz0q.mongodb.net/shop';//?retryWrites=true&w=majority';
+const MONGODB_URI = PRIVATE.dbURL;
 
 const app = express();
 const store = new MongoDBStore({

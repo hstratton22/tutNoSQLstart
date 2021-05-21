@@ -126,7 +126,12 @@ exports.postLogin = (req, res, next) => {
                 });
         })
         //next();
-        .catch(err => console.log(err));
+        .catch(err => //console.log(err)
+        {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
@@ -146,10 +151,10 @@ exports.postSignup = (req, res, next) => {
             pageTitle: 'Signup',
             errorMessage: errors.array()[0].msg,
             oldInput: {
-                email: email, 
-                password: password, 
+                email: email,
+                password: password,
                 confirmPassword: req.body.confirmPassword
-            }, 
+            },
             validationErrors: errors.array()
         });
     }
@@ -181,7 +186,12 @@ exports.postSignup = (req, res, next) => {
             // });
         })
         .catch(err => {
-            console.log(err);
+            //console.log(err);
+            {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            }
         })
 };
 exports.getReset = (req, res, next) => {
@@ -227,7 +237,11 @@ exports.postReset = (req, res, next) => {
                 });
 
             })
-            .catch(err => { console.log(err); });
+            .catch(err => { //console.log(err); 
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
     });
 }
 exports.getNewPassword = (req, res, next) => {
@@ -251,7 +265,10 @@ exports.getNewPassword = (req, res, next) => {
             }
         )
         .catch(err => {
-            console.log(err);
+            //console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 
 
@@ -281,6 +298,9 @@ exports.postNewPassword = (req, res, next) => {
             res.redirect('/login');
         })
         .catch(err => {
-            console.log(err);
+            //console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 }

@@ -1,5 +1,6 @@
 //const mongodb = require('mongodb');
-const {validationResult}= require('express-validator/check')
+//const mongoose = require('mongoose');
+const { validationResult } = require('express-validator/check')
 const Product = require('../models/product');
 
 //const ObjectId = mongodb.ObjectId;
@@ -25,7 +26,8 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
   const errors = validationResult(req);
-  if (!errors.isEmpty()){
+
+  if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
@@ -45,6 +47,7 @@ exports.postAddProduct = (req, res, next) => {
   }
 
   const product = new Product({
+    // _id: new mongoose.Types.ObjectId('609b36fe6b576700045f16f6'),
     title: title,
     price: price,
     description: description,
@@ -66,7 +69,25 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => {
-      console.log(err);
+      // return res.status(500).render('admin/edit-product', {
+      //   pageTitle: 'Add Product',
+      //   path: '/admin/add-product',
+      //   editing: false,
+      //   hasError: true,
+      //   product: {
+      //     title: title,
+      //     imageUrl: imageUrl,
+      //     price: price,
+      //     description: description
+      //   },
+      //   errorMessage: 'Database operation failed, please try again.',
+      //   validationErrors: []
+      // });
+      //console.log(err);
+      //res.redirect('/500');
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -93,7 +114,13 @@ exports.getEditProduct = (req, res, next) => {
         //isAuthenticated : req.session.isLoggedIn
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      //res.redirect('/500');
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+  //console.log(err));
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -104,7 +131,7 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDesc = req.body.description;
 
   const errors = validationResult(req);
-  if (!errors.isEmpty()){
+  if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Edit Product',
@@ -123,7 +150,7 @@ exports.postEditProduct = (req, res, next) => {
       //isAuthenticated : req.session.isLoggedIn
     });
   }
-  
+
 
   Product.findById(prodId)
     .then(product => {
@@ -142,7 +169,13 @@ exports.postEditProduct = (req, res, next) => {
           res.redirect('/admin/products');
         });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+    //console.log(err));
+    {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    })
 };
 
 exports.getProducts = (req, res, next) => {
@@ -158,16 +191,25 @@ exports.getProducts = (req, res, next) => {
         //isAuthenticated :  req.session.isLoggedIn
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => //console.log(err)
+    {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteOne({ _id: prodId, userId: req.user._id})
-  //Product.findByIdAndRemove(prodId)
+  Product.deleteOne({ _id: prodId, userId: req.user._id })
+    //Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch(err => //console.log(err)
+    {const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };

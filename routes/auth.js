@@ -12,7 +12,7 @@ router.post(
             .isEmail()
             .withMessage('Please enter a valid email.')
             .normalizeEmail(),
-        body('password', 'Password must be 5 alphanumeric characters')
+        body('password', 'Password must be 4 alphanumeric characters')
             .isLength({ min: 4 })
             .isAlphanumeric()
             .trim()

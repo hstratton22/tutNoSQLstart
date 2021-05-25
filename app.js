@@ -75,7 +75,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-app.post('500', errorController.get500);
+app.get('/500', errorController.get500);//post?
 app.use(errorController.get404);
 app.use((err, req, res, next) => {
   //res.status(error.httpStatusCode).render(...);

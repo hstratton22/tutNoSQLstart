@@ -1,6 +1,6 @@
 //const mongodb = require('mongodb');
 //const mongoose = require('mongoose');
-const { validationResult } = require('express-validator/check')
+const { validationResult } = require('express-validator/check');
 const Product = require('../models/product');
 
 //const ObjectId = mongodb.ObjectId;
@@ -100,6 +100,7 @@ exports.getEditProduct = (req, res, next) => {
   Product.findById(prodId)
     // Product.findById(prodId)
     .then(product => {
+      //throw new Error("Dummy");
       if (!product) {
         return res.redirect('/');
       }
@@ -208,7 +209,8 @@ exports.postDeleteProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => //console.log(err)
-    {const error = new Error(err);
+    {
+      const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
     });

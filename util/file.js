@@ -4,6 +4,6 @@ const fs = require('fs');
          if (err) {
              throw (err);
          }
-     });
+     }); 
  }
 exports.deleteFile = deleteFile;
